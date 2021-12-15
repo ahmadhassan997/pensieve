@@ -58,3 +58,8 @@ print "Need to put pre-trained NN model in 'pensieve/rl_server/results'."
 
 # # uninstall easyprocess and install correct version if url error encountered
 # os.system("sudo pip install easyprocess==0.2")
+
+# run ./tune-network.sh to increase tcp buffer sizes
+# with mahimahi delay and 5G network traces,
+# BDP can grow above default buffer limits causing inconsistent results
+

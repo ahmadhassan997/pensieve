@@ -4,11 +4,10 @@ import json
 import urllib
 import subprocess
 
-
-TRACE_PATH = '../cooked_traces/' 
+TRACE_PATH = '../cooked_traces/'
 
 with open('./chrome_retry_log', 'wb') as f:
-	f.write('chrome retry log\n')
+    f.write('chrome retry log\n')
 
 os.system('sudo sysctl -w net.ipv4.ip_forward=1')
 
@@ -47,7 +46,9 @@ ABR_ALGO = 'RL'
 PROCESS_ID = 7
 command_RL = 'python run_traces.py ' + TRACE_PATH + ' ' + ABR_ALGO + ' ' + str(PROCESS_ID) + ' ' + ip
 
-proc_BB = subprocess.Popen(command_BB, stdout=subprocess.PIPE, shell=True)
+proc_BB = subprocess.Popen(command_BB,
+                           stdout=subprocess.PIPE,
+                           shell=True)
 time.sleep(0.1)
 # proc_RB = subprocess.Popen(command_RB, stdout=subprocess.PIPE, shell=True)
 # time.sleep(0.1)
