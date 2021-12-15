@@ -71,15 +71,15 @@ try:
 	chromeLocalStatePrefs = {'browser.enabled_labs_experiments': experimentalFlags}
 	options=Options()
 	chrome_driver = '../abr_browser_dir/chromedriver'
-	options.add_experimental_option('localState', chromeLocalStatePrefs)
+	# options.add_experimental_option('localState', chromeLocalStatePrefs)
 	options.add_argument('--user-data-dir=' + chrome_user_dir)
 	options.add_argument('--ignore-certificate-errors')
+	options.add_argument('--mse-video-buffer-size-limit-mb=8000')
 	options.add_argument('--autoplay-policy=no-user-gesture-required')
 	driver=webdriver.Chrome(chrome_driver, chrome_options=options)
 	
 	# run chrome
 	driver.set_page_load_timeout(10)
-
 	driver.get(url)
 	
 	sleep(run_time)

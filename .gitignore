@@ -2,6 +2,7 @@
 abr_browser_dir/results/
 results/
 run_exp/results/
+run_exp/chrome_retry_log
 
 # ignore traces
 cooked_traces/
