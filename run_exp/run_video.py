@@ -48,7 +48,7 @@ try:
 	chrome_user_dir = '/tmp/chrome_user_dir_id_' + process_id
 	os.system('rm -r ' + chrome_user_dir)
 	os.system('cp -r ' + default_chrome_user_dir + ' ' + chrome_user_dir)
-	
+
 	# start abr algorithm server
 	if abr_algo == 'RL':
 		command = 'exec /usr/bin/python ../rl_server/rl_server_no_training.py ' + trace_file
@@ -58,23 +58,28 @@ try:
 		command = 'exec /usr/bin/python ../rl_server/robust_mpc_server.py ' + trace_file
 	else:
 		command = 'exec /usr/bin/python ../rl_server/simple_server.py ' + abr_algo + ' ' + trace_file
-	
+
 	proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 	sleep(2)
 	
 	# to not display the page in browser
-	display = Display(visible=0, size=(800,600))
+	display = Display(visible=True, size=(800,600))
 	display.start()
 	
 	# initialize chrome driver
+	experimentalFlags = ['block-insecure-private-network-requests@2']
+	chromeLocalStatePrefs = {'browser.enabled_labs_experiments': experimentalFlags}
 	options=Options()
 	chrome_driver = '../abr_browser_dir/chromedriver'
+	options.add_experimental_option('localState', chromeLocalStatePrefs)
 	options.add_argument('--user-data-dir=' + chrome_user_dir)
 	options.add_argument('--ignore-certificate-errors')
+	options.add_argument('--autoplay-policy=no-user-gesture-required')
 	driver=webdriver.Chrome(chrome_driver, chrome_options=options)
 	
 	# run chrome
 	driver.set_page_load_timeout(10)
+
 	driver.get(url)
 	
 	sleep(run_time)
