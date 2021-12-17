@@ -11,6 +11,10 @@ cooked_traces/
 google-chrome-stable_current_amd64.deb*
 selenium-2.39.0.tar.gz*
 
+# ignore videos
+helpers/input_videos/
+helpers/output_videos/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

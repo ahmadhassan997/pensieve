@@ -64,7 +64,7 @@ try:
     sleep(2)
 
     # to not display the page in browser
-    display = Display(visible=True, size=(800, 600))
+    display = Display(visible=False, size=(800, 600))
     display.start()
 
     # initialize chrome driver
@@ -75,7 +75,7 @@ try:
     options.add_experimental_option('localState', chromeLocalStatePrefs)
     options.add_argument('--user-data-dir=' + chrome_user_dir)
     options.add_argument('--ignore-certificate-errors')
-    options.add_argument('--mse-video-buffer-size-limit-mb=8000')
+    options.add_argument('--mse-video-buffer-size-limit-mb=12000')
     options.add_argument('--autoplay-policy=no-user-gesture-required')
     driver = webdriver.Chrome(chrome_driver, chrome_options=options)
 
