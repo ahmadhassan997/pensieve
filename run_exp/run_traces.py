@@ -29,6 +29,10 @@ def main():
             np.random.shuffle(sleep_vec)
             sleep_time = sleep_vec[int(process_id)]
 
+            # command = 'mm-delay ' + str(MM_DELAY) + ' mm-link 12mbps ' + trace_path + f + ' --meter-downlink ' + \
+            #           '/usr/bin/python ' + RUN_SCRIPT + ' ' + ip + ' ' + abr_algo + ' ' + \
+            #           str(RUN_TIME) + ' ' + process_id + ' ' + f + ' ' + str(sleep_time)
+
             command = 'mm-delay ' + str(MM_DELAY) + ' mm-link 12mbps ' + trace_path + f + ' ' + \
                       '/usr/bin/python ' + RUN_SCRIPT + ' ' + ip + ' ' + abr_algo + ' ' + \
                       str(RUN_TIME) + ' ' + process_id + ' ' + f + ' ' + str(sleep_time)
