@@ -21,6 +21,7 @@ command_BB = 'python run_traces.py ' + TRACE_PATH + ' ' + ABR_ALGO + ' ' + str(P
 ABR_ALGO = 'RB'
 PROCESS_ID = 1
 command_RB = 'python run_traces.py ' + TRACE_PATH + ' ' + ABR_ALGO + ' ' + str(PROCESS_ID) + ' ' + ip
+print command_RB
 
 ABR_ALGO = 'FIXED'
 PROCESS_ID = 2
@@ -51,8 +52,8 @@ command_RL = 'python run_traces.py ' + TRACE_PATH + ' ' + ABR_ALGO + ' ' + str(P
 #                            shell=True)
 # time.sleep(0.1)
 proc_RB = subprocess.Popen(command_RB,
-                           stdout=subprocess.PIPE,
                            shell=True)
+                           #                            stdout=subprocess.PIPE,
 time.sleep(0.1)
 # proc_FIXED = subprocess.Popen(command_FIXED,
 #                               stdout=subprocess.PIPE,

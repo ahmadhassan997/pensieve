@@ -12,16 +12,22 @@ from collections import deque
 import numpy as np
 import time
 
-VIDEO_BIT_RATE = [1500, 4900, 8200, 11700, 32800, 152400]  # Kbps
+VIDEO_BIT_RATE = [4900, 8200, 11700, 32800, 152400, 260000]  # Kbps
 BITRATE_REWARD = [1, 2, 3, 12, 15, 20]
-BITRATE_REWARD_MAP = {0: 0, 1500: 1, 4900: 2, 8200: 3, 11700: 12, 32800: 15, 152400: 20}
+BITRATE_REWARD_MAP = {0: 0, 1500: 1, 1850: 2, 4900: 3, 8200: 12, 11700: 15, 32800: 20}
 M_IN_K = 1000.0
 DEFAULT_QUALITY = 0  # default video quality without agent
-REBUF_PENALTY = 4.3  # 1 sec rebuffering -> this number of Mbps
+REBUF_PENALTY = 260  # 1 sec rebuffering -> this number of Mbps
 SMOOTH_PENALTY = 1
-TOTAL_VIDEO_CHUNKS = 120
+TOTAL_VIDEO_CHUNKS = 60
 SUMMARY_DIR = './results'
 LOG_FILE = './results/log'
+
+start_time = np.loadtxt('start_time.txt', dtype=float)
+print(start_time)
+
+if len(sys.argv) == 4:
+    ho_trace = np.loadtxt(open(sys.argv[3], "rb"), delimiter=",", skiprows=0)
 
 
 # in format of time_stamp bit_rate buffer_size rebuffer_time video_chunk_size download_time reward
@@ -116,7 +122,7 @@ def run(server_class=HTTPServer, port=8333, log_file_path=LOG_FILE):
 
 
 def main():
-    if len(sys.argv) == 3:
+    if len(sys.argv) == 3 or len(sys.argv) == 4:
         abr_algo = sys.argv[1]
         trace_file = sys.argv[2]
         run(log_file_path=LOG_FILE + '_' + abr_algo + '_' + trace_file)

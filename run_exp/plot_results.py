@@ -9,10 +9,10 @@ BITS_IN_BYTE = 8.0
 MILLISEC_IN_SEC = 1000.0
 M_IN_B = 1000000.0
 VIDEO_LEN = 64
-VIDEO_BIT_RATE = [350, 600, 1000, 2000, 3000]
+VIDEO_BIT_RATE = [1500, 4900, 8200, 11700, 32800, 152400]
 COLOR_MAP = plt.cm.jet #nipy_spectral, Set1,Paired 
 SIM_DP = 'sim_dp'
-SCHEMES = ['BB', 'RB', 'FESTIVE', 'BOLA', 'fastMPC', 'robustMPC']
+SCHEMES = ['BB', 'RB', 'fastMPC', 'robustMPC']
 
 
 def main():
@@ -41,33 +41,33 @@ def main():
 		print log_file
 
 		with open(RESULTS_FOLDER + log_file, 'rb') as f:
-			if SIM_DP in log_file:
-				for line in f:
-					parse = line.split()
-					if len(parse) == 1:
-						reward = float(parse[0])
-					elif len(parse) >= 6:
-						time_ms.append(float(parse[3]))
-						bit_rate.append(VIDEO_BIT_RATE[int(parse[6])])
-						buff.append(float(parse[4]))
-						bw.append(float(parse[5]))
+			# if SIM_DP in log_file:
+			# 	for line in f:
+			# 		parse = line.split()
+			# 		if len(parse) == 1:
+			# 			reward = float(parse[0])
+			# 		elif len(parse) >= 6:
+			# 			time_ms.append(float(parse[3]))
+			# 			bit_rate.append(VIDEO_BIT_RATE[int(parse[6])])
+			# 			buff.append(float(parse[4]))
+			# 			bw.append(float(parse[5]))
 
-			else:
-				for line in f:
-					parse = line.split()
-					if len(parse) <= 1:
-						break
-					time_ms.append(float(parse[0]))
-					bit_rate.append(int(parse[1]))
-					buff.append(float(parse[2]))
-					bw.append(float(parse[4]) / float(parse[5]) * BITS_IN_BYTE * MILLISEC_IN_SEC / M_IN_B)
-					reward.append(float(parse[6]))
+			# else:
+			for line in f:
+				parse = line.split()
+				if len(parse) <= 1:
+					break
+				time_ms.append(float(parse[0]))
+				bit_rate.append(int(parse[1]))
+				buff.append(float(parse[2]))
+				bw.append(float(parse[4]) / float(parse[5]) * BITS_IN_BYTE * MILLISEC_IN_SEC / M_IN_B)
+				reward.append(float(parse[6]))
 
-		if SIM_DP in log_file:
-			time_ms = time_ms[::-1]
-			bit_rate = bit_rate[::-1]
-			buff = buff[::-1]
-			bw = bw[::-1]
+		# if SIM_DP in log_file:
+		# 	time_ms = time_ms[::-1]
+		# 	bit_rate = bit_rate[::-1]
+		# 	buff = buff[::-1]
+		# 	bw = bw[::-1]
 		
 		time_ms = np.array(time_ms)
 		time_ms -= time_ms[0]
@@ -94,10 +94,10 @@ def main():
 
 	for l in time_all[SCHEMES[0]]:
 		schemes_check = True
-		for scheme in SCHEMES:
-			if l not in time_all[scheme] or len(time_all[scheme][l]) < VIDEO_LEN:
-				schemes_check = False
-				break
+		# for scheme in SCHEMES:
+		# 	if l not in time_all[scheme] or len(time_all[scheme][l]) < VIDEO_LEN:
+		# 		schemes_check = False
+		# 		break
 		if schemes_check:
 			log_file_all.append(l)
 			for scheme in SCHEMES:

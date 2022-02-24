@@ -5,7 +5,7 @@ import subprocess
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from pyvirtualdisplay import Display
-from time import sleep
+from time import sleep, time
 
 
 # TO RUN: download https://pypi.python.org/packages/source/s/selenium/selenium-2.39.0.tar.gz
@@ -20,6 +20,13 @@ from time import sleep
 # if they are at those locations, don't need to specify
 
 
+## TODO: Log down the time where this script starts and parse it in the http server
+start_time = time()
+with open('start_time.txt', 'w') as f:
+    f.write(str(start_time))
+    f.close()
+
+
 def timeout_handler(signum, frame):
     raise Exception("Timeout")
 
@@ -30,6 +37,7 @@ run_time = int(sys.argv[3])
 process_id = sys.argv[4]
 trace_file = sys.argv[5]
 sleep_time = sys.argv[6]
+ho_trace = sys.argv[7]
 
 # prevent multiple process from being synchronized
 sleep(int(sleep_time))
@@ -50,21 +58,23 @@ try:
 
     # start abr algorithm server
     if abr_algo == 'RL':
-        command = 'exec /usr/bin/python ../rl_server/rl_server_no_training.py ' + trace_file
+        command = 'exec /usr/bin/python ../rl_server/rl_server_no_training.py ' + trace_file + ' ' + ho_trace
     elif abr_algo == 'fastMPC':
-        command = 'exec /usr/bin/python ../rl_server/mpc_server.py ' + trace_file
+        command = 'exec /usr/bin/python ../rl_server/mpc_server.py ' + trace_file + ' ' + ho_trace
     elif abr_algo == 'robustMPC':
-        command = 'exec /usr/bin/python ../rl_server/robust_mpc_server.py ' + trace_file
+        command = 'exec /usr/bin/python ../rl_server/robust_mpc_server.py ' + trace_file + ' ' + ho_trace
+    elif abr_algo == 'RB':
+        command = 'exec /usr/bin/python ../rl_server/RB_HO_server.py ' + trace_file + ' ' + ho_trace
     else:
-        command = 'exec /usr/bin/python ../rl_server/simple_server.py ' + abr_algo + ' ' + trace_file
+        command = 'exec /usr/bin/python ../rl_server/simple_server.py ' + abr_algo + ' ' + trace_file + ' ' + ho_trace
 
     proc = subprocess.Popen(command,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                             shell=True)
+                            # stdout=subprocess.PIPE, stderr=subprocess.PIPE,
     sleep(2)
 
     # to not display the page in browser
-    display = Display(visible=False, size=(800, 600))
+    display = Display(visible=True, size=(800, 600))
     display.start()
 
     # initialize chrome driver
