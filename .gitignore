@@ -6,6 +6,7 @@ run_exp/chrome_retry_log
 
 # ignore traces
 cooked_traces/
+cooked_traces_*/
 
 # ignore binaries or tar files
 google-chrome-stable_current_amd64.deb*
